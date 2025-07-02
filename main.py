@@ -1,8 +1,20 @@
+from flask import Flask, jsonify
 import asyncio
 from telethon import TelegramClient
 import yaml
 
-async def main():
+app = Flask(__name__)
+
+@app.route("/test")
+def test():
+    return jsonify({"status": "Flask 服务运行成功"})
+
+@app.route("/run")
+def run_group_control():
+    asyncio.run(run_clients())
+    return jsonify({"status": "群控执行完成"})
+
+async def run_clients():
     with open('config.yaml', 'r') as f:
         config = yaml.safe_load(f)
 
